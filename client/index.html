@@ -7,13 +7,19 @@
 <style>
   body { font-family: Arial, sans-serif; background: #f0f2f5; padding: 20px; }
   h1 { text-align: center; color: #333; }
-  .container { max-width: 800px; margin: auto; background: #fff; padding: 20px; border-radius: 10px; box-shadow: 0 0 10px rgba(0,0,0,0.1); }
-  input, select, button { padding: 10px; margin: 5px; }
+  .container { max-width: 900px; margin: auto; background: #fff; padding: 20px; border-radius: 10px; box-shadow: 0 0 10px rgba(0,0,0,0.1); }
+  input, button { padding: 10px; margin: 5px; }
+  input[type="text"], input[type="number"] { width: calc(25% - 22px); }
+  button { cursor: pointer; }
   table { width: 100%; border-collapse: collapse; margin-top: 20px; }
   th, td { padding: 10px; border: 1px solid #ddd; text-align: center; }
   th { background: #007BFF; color: white; }
-  button.edit { background: #ffc107; color: #fff; border: none; cursor: pointer; }
-  button.delete { background: #dc3545; color: #fff; border: none; cursor: pointer; }
+  button.edit { background: #ffc107; color: #fff; border: none; padding: 5px 10px; }
+  button.delete { background: #dc3545; color: #fff; border: none; padding: 5px 10px; }
+  #search { width: 50%; margin-top: 10px; padding: 8px; }
+  @media(max-width:700px){
+    input[type="text"], input[type="number"] { width: 100%; margin-bottom: 10px; }
+  }
 </style>
 </head>
 <body>
@@ -52,6 +58,7 @@
   const studentTable = document.getElementById('studentTable').querySelector('tbody');
   const searchInput = document.getElementById('search');
 
+  // Add Student
   studentForm.addEventListener('submit', function(e) {
     e.preventDefault();
     const student = {
@@ -66,6 +73,7 @@
     studentForm.reset();
   });
 
+  // Render Table
   function renderTable() {
     const searchTerm = searchInput.value.toLowerCase();
     studentTable.innerHTML = '';
@@ -87,11 +95,13 @@
       });
   }
 
+  // Delete Student
   function deleteStudent(id) {
     students = students.filter(s => s.id !== id);
     renderTable();
   }
 
+  // Edit Student
   function editStudent(id) {
     const student = students.find(s => s.id === id);
     document.getElementById('name').value = student.name;
@@ -101,6 +111,7 @@
     deleteStudent(id);
   }
 
+  // Search
   searchInput.addEventListener('input', renderTable);
 </script>
 
